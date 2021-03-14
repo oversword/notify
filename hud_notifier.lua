@@ -7,6 +7,30 @@ local function hud_id()
 	return __hud_id
 end
 
+local function stack_up(stack)
+	local text
+	for _,rec in ipairs(stack) do
+		if text then
+			text = rec.text .. "\n" .. text
+		else
+			text = rec.text
+		end
+	end
+	return text or ''
+end
+
+local function stack_down(stack)
+	local text
+	for _,rec in ipairs(stack) do
+		if text then
+			text = text .. "\n" .. rec.text
+		else
+			text = rec.text
+		end
+	end
+	return text or ''
+end
+
 function HUDNotifier:new(attrs)
 	local o = {
 		player_huds = {},
@@ -53,10 +77,7 @@ function HUDNotifier:notify(player, message)
 			table.insert(hud.stack, message_record)
 		elseif self.conflict_behaviour == 'stack-up' then
 			table.insert(hud.stack, message_record)
-			local text = ''
-			for _,rec in ipairs(hud.stack) do
-				text = rec.text .. "\n" .. text
-			end
+			local text = stack_up(hud.stack)
 			minetest.after(0, function ()
 				player:hud_change(hud.id, 'text', text)
 			end)
@@ -65,10 +86,7 @@ function HUDNotifier:notify(player, message)
 			end)
 		elseif self.conflict_behaviour == 'stack-down' then
 			table.insert(hud.stack, message_record)
-			local text = ''
-			for _,rec in ipairs(hud.stack) do
-				text = text .. "\n" .. rec.text
-			end
+			local text = stack_down(hud.stack)
 			minetest.after(0, function ()
 				player:hud_change(hud.id, 'text', text)
 			end)
@@ -131,33 +149,32 @@ function HUDNotifier:update(player)
 			end)
 		else
 			player:hud_remove(hud.id)
+			self.player_huds[player_name] = nil
 		end
 	elseif self.conflict_behaviour == 'stack-up' then
 		if #hud.stack > 0 then
-			local text = ''
-			for _,rec in ipairs(hud.stack) do
-				text = rec.text .. "\n" .. text
-			end
+			local text = stack_up(hud.stack)
 			player:hud_change(hud.id, 'text', text)
 		else
 			player:hud_remove(hud.id)
+			self.player_huds[player_name] = nil
 		end
 	elseif self.conflict_behaviour == 'stack-down' then
 		if #hud.stack > 0 then
-			local text = ''
-			for _,rec in ipairs(hud.stack) do
-				text = text .. "\n" .. rec.text
-			end
+			local text = stack_down(hud.stack)
 			player:hud_change(hud.id, 'text', text)
 		else
 			player:hud_remove(hud.id)
+			self.player_huds[player_name] = nil
 		end
 	elseif self.conflict_behaviour == 'overwrite' then
 		if os.time() >= hud.stack[1].time + self.duration then
 			player:hud_remove(hud.id)
+			self.player_huds[player_name] = nil
 		end
 	else
 		player:hud_remove(hud.id)
+		self.player_huds[player_name] = nil
 	end
 end
 
