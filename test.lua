@@ -33,6 +33,7 @@ local test_hud_args = {
 local test_hud_config = table.copy(test_hud_args)
 test_hud_config.duration = 5
 test_hud_config.conflict_behaviour = 'stack-up'
+test_hud_config.color = "#FFFFFF"
 
 local test_hud_def = table.copy(test_hud_args)
 test_hud_def.number = 0xFFFFFF
@@ -243,7 +244,7 @@ describe("Notify", function ()
 			get_player_stub.called_times(1)
 			get_player_stub.called_with(test_player_name)
 			send_chat_stub.called_times(1)
-			send_chat_stub.called_with(test_player_name, text)
+			send_chat_stub.called_with(test_player_name, minetest.colorize("#FFFFFF", text))
 		end)
 		it("crunches newlines to be double spaces", function ()
 			local chat_notifier = notify.notifier('chat')
@@ -252,7 +253,7 @@ describe("Notify", function ()
 			chat_notifier:notify(test_player_name, text)
 
 			send_chat_stub.called_times(1)
-			send_chat_stub.called_with(test_player_name, "Hello  Again")
+			send_chat_stub.called_with(test_player_name, minetest.colorize("#FFFFFF", "Hello  Again"))
 		end)
 		it("prefixes a mod notifier with mod name", function ()
 			local chat_notifier = notify.notifier('chat')
@@ -262,10 +263,11 @@ describe("Notify", function ()
 			mod_chat_notifier:notify(test_player_name, text)
 
 			send_chat_stub.called_times(1)
-			send_chat_stub.called_with(test_player_name, "[test_mod] Hello")
+			send_chat_stub.called_with(test_player_name, minetest.colorize("#FFFFFF", "[test_mod] Hello"))
 		end)
 	end)
 
+	--TODO: test colours
 	--TODO: formspec tests once functionality is decided
 
 end)

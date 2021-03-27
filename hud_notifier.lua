@@ -31,6 +31,22 @@ local function stack_down(stack)
 	return text or ''
 end
 
+
+local function color_string_to_number(color)
+	if string.sub(color,1,1) == '#' then
+		color = string.sub(color, 2)
+	end
+	if #color < 6 then
+		local r = string.sub(color,1,1)
+		local g = string.sub(color,2,2)
+		local b = string.sub(color,3,3)
+		color = r..r .. g..g .. b..b
+	elseif #color > 6 then
+		color = string.sub(color, 1, 6)
+	end
+	return tonumber(color, 16)
+end
+
 function HUDNotifier:new(attrs)
 	local o = {
 		player_huds = {},
@@ -39,7 +55,7 @@ function HUDNotifier:new(attrs)
 		alignment = attrs.alignment or notify.settings.hud.default_alignment,
 		offset = attrs.offset or notify.settings.hud.default_offset,
 		direction = attrs.direction or notify.settings.hud.default_direction,
-		text_color = 0xFFFFFF
+		text_color = color_string_to_number(attrs.color or notify.settings.hud.default_color)
 	}
 	local conflict_behaviour = attrs.conflict_behaviour or notify.settings.hud.default_conflict_behaviour
 	if conflict_behaviour == 'stack' then

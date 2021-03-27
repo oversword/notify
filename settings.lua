@@ -89,6 +89,13 @@ notify.settings = {
 		default_conflict_behaviour = one_of(
 			get_setting('notify.hud.default_conflict_behaviour'),
 			{'stack','stack-up','stack-down','overwrite','ignore','wait'}
-		) or 'stack'
+		) or 'stack',
+		default_color = get_setting('notify.hud.default_color') or '#FFFFFF'
+	},
+	chat = {
+		default_color = get_setting('notify.chat.default_color') or '#FFFFFF'
+	},
+	formspec = {
+		default_color = get_setting('notify.formspec.default_color') or '#FFFFFF'
 	}
 }

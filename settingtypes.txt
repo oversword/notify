@@ -1,5 +1,7 @@
 notify.default_method (Display method of the default notification factory) enum hud hud,chat,formspec
 
+## HUD DEFAULTS
+
 # See HUD docs for more details https://dev.minetest.net/HUD
 
 # Only first 2 values will be used, will be relative to the size of the screen, between 0 and 1
@@ -16,3 +18,15 @@ notify.hud.default_direction (Default text direction of a HUD) enum left-right l
 notify.hud.default_duration (Default duration that a HUD message will display for) float 3.0
 
 notify.hud.default_conflict_behaviour (Default behaviour when a new message is sent to a HUD that is already displaying a message) enum stack stack,stack-up,stack-down,overwrite,ignore,wait
+
+notify.hud.default_color (Default color of a HUD notification) string #FFFFFF
+
+
+## CHAT DEFAULTS
+
+notify.chat.default_color (Default color of a chat notification) string #FFFFFF
+
+
+## FORMSPEC DEFAULTS
+
+notify.formspec.default_color (Default color of a formspec notification) string #FFFFFF
