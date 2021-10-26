@@ -5,13 +5,13 @@ notify.default_method (Display method of the default notification factory) enum 
 # See HUD docs for more details https://dev.minetest.net/HUD
 
 # Only first 2 values will be used, will be relative to the size of the screen, between 0 and 1
-notify.hud.default_position (Default on-screen position of a HUD) v3f (0.1, 0.9, 0)
+notify.hud.default_position (Default on-screen position of a HUD) string 0.1, 0.9
 
 # Only first 2 values will be used, will align to top/left (-1) center (0) or bottom/right(1), values can be fractional
-notify.hud.default_alignment (Default text alignment of a HUD relative to position) v3f (1, -1, 0)
+notify.hud.default_alignment (Default text alignment of a HUD relative to position) string 1, -1
 
 # Only first 2 values will be used, number of pixels to offset, scaled by user DPI and scaling factor, but not screen size
-notify.hud.default_offset (Default pixel offset of a HUD) v3f (0, 0, 0)
+notify.hud.default_offset (Default pixel offset of a HUD) string 0, 0
 
 notify.hud.default_direction (Default text direction of a HUD) enum left-right left-right,right-left,top-bottom,bottom-top
 
